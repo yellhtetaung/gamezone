@@ -9,6 +9,7 @@ const ReviewDetails = ({ navigation, route }) => {
 
   return (
     <View style={globalStyles.container}>
+      {/*Passing Data*/}
       <Text>{route.params.title}</Text>
       <Text>{route.params.body}</Text>
       <Text>{route.params.rating}</Text>
