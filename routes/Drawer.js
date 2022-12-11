@@ -15,7 +15,7 @@ const Drawer = () => {
           headerShown: false,
         }}
       >
-        <Drawer.Screen name="GameZone" component={HomeStack} />
+        <Drawer.Screen name="Home" component={HomeStack} />
         <Drawer.Screen name="About" component={AboutStack} />
       </Drawer.Navigator>
     </NavigationContainer>
