@@ -28,7 +28,15 @@ const ReviewDetails = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  rating: {},
+  rating: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+
+    paddingTop: 16,
+    marginTop: 16,
+  },
 });
 
 export default ReviewDetails;

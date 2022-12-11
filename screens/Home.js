@@ -39,6 +39,7 @@ const Home = ({ navigation }) => {
 
       <FlatList
         data={reviews}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}
