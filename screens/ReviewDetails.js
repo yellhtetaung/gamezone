@@ -1,21 +1,42 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, Button } from "react-native";
-import { globalStyles } from "../styles/Global";
+import { StyleSheet, View, Text, Button, Image } from "react-native";
+import { globalStyles, images } from "../styles/Global";
+import Card from "../shared/Card";
 
 const ReviewDetails = ({ navigation, route }) => {
   // const pressHandler = () => {
   //   navigation.goBack();
   // };
 
+  const rating = route.params.rating;
+
   return (
     <View style={globalStyles.container}>
-      <Text>{route.params.title}</Text>
-      <Text>{route.params.body}</Text>
-      <Text>{route.params.rating}</Text>
+      {/*Passing Data*/}
+      <Card>
+        <Text>{route.params.title}</Text>
+        <Text>{route.params.body}</Text>
+        <View style={styles.rating}>
+          <Text>Game Zone rating: </Text>
+          <Image source={images.ratings[rating]} />
+        </View>
+      </Card>
       {/* <Button title="go to home" onPress={() => pressHandler()} /> */}
       <StatusBar style="auto" />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  rating: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+
+    paddingTop: 16,
+    marginTop: 16,
+  },
+});
 
 export default ReviewDetails;

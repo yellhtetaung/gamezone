@@ -1,9 +1,22 @@
-import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import { View, Text, Button, FlatList, TouchableOpacity } from "react-native";
+import { StatusBar } from "expo-status-bar";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  FlatList,
+  TouchableOpacity,
+  Modal,
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { globalStyles } from "../styles/Global";
 
+import Card from "../shared/Card";
+
 const Home = ({ navigation }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [reviews, setReviews] = useState([
     {
       title: "Zelda, Breath of Fresh Air",
@@ -35,13 +48,35 @@ const Home = ({ navigation }) => {
       {/* <Text style={globalStyles.titleText}>Home Screen</Text>
       <Button title="go to review details" onPress={() => pressHandler()} /> */}
 
+      <Modal visible={modalOpen}>
+        <View style={styles.modalContent}>
+          <MaterialIcons
+            name="close"
+            size={24}
+            style={{ ...styles.modalToggle, ...styles.modalClose }}
+            onPress={() => setModalOpen(false)}
+          />
+          <Text>Hello from the modal :) </Text>
+        </View>
+      </Modal>
+
+      <MaterialIcons
+        name="add"
+        size={24}
+        style={styles.modalToggle}
+        onPress={() => setModalOpen(true)}
+      />
+
       <FlatList
         data={reviews}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}
           >
-            <Text style={globalStyles.titleText}>{item.title}</Text>
+            <Card>
+              <Text style={globalStyles.titleText}>{item.title}</Text>
+            </Card>
           </TouchableOpacity>
         )}
       />
@@ -49,5 +84,25 @@ const Home = ({ navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  modalToggle: {
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: "#f2f2f2",
+    padding: 10,
+    borderRadius: 10,
+    alignSelf: "center",
+  },
+
+  modalClose: {
+    marginTop: 20,
+    marginBottom: 0,
+  },
+
+  modalContent: {
+    flex: 1,
+  },
+});
 
 export default Home;

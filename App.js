@@ -12,6 +12,7 @@ export default function App() {
     "nunito-bold": require("./assets/fonts/Nunito-Bold.ttf"),
   });
 
+  // if fonts cann't load when showing splashScreen
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
