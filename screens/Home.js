@@ -2,15 +2,19 @@ import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
+  SafeAreaView,
   View,
   Text,
   Button,
   FlatList,
   TouchableOpacity,
   Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { globalStyles } from "../styles/Global";
+import ReviewForm from "./ReviewForm";
 
 import Card from "../shared/Card";
 
@@ -38,6 +42,14 @@ const Home = ({ navigation }) => {
     },
   ]);
 
+  const addReview = (review) => {
+    review.key = Math.random().toString();
+    setReviews((currentReview) => {
+      return [review, ...currentReview];
+    });
+    setModalOpen(false);
+  };
+
   // const pressHandler = () => {
   //   // navigation.navigate("ReviewDetails");
   //   navigation.push("ReviewDetails");
@@ -48,16 +60,18 @@ const Home = ({ navigation }) => {
       {/* <Text style={globalStyles.titleText}>Home Screen</Text>
       <Button title="go to review details" onPress={() => pressHandler()} /> */}
 
-      <Modal visible={modalOpen}>
-        <View style={styles.modalContent}>
-          <MaterialIcons
-            name="close"
-            size={24}
-            style={{ ...styles.modalToggle, ...styles.modalClose }}
-            onPress={() => setModalOpen(false)}
-          />
-          <Text>Hello from the modal :) </Text>
-        </View>
+      <Modal visible={modalOpen} animationType="slide">
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <SafeAreaView style={styles.modalContent}>
+            <MaterialIcons
+              name="close"
+              size={24}
+              style={{ ...styles.modalToggle, ...styles.modalClose }}
+              onPress={() => setModalOpen(false)}
+            />
+            <ReviewForm addReview={addReview} />
+          </SafeAreaView>
+        </TouchableWithoutFeedback>
       </Modal>
 
       <MaterialIcons
@@ -69,7 +83,7 @@ const Home = ({ navigation }) => {
 
       <FlatList
         data={reviews}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigation.navigate("ReviewDetails", item)}
